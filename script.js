@@ -11,7 +11,7 @@ const cakeState = {
   typeName: "Crema Fría / Chantilly",
   typeCategory: "Fría",
   typeExtraPrice: 0,
-  creamBackground: "#FFF8DC", // Puede ser color sólido o gradiente
+  creamBackground: "#FFF8DC", // Soporta colores sólidos o degradados
   toppings: [],
   customText: ""
 };
@@ -24,7 +24,7 @@ const typeSelect = document.getElementById('type-select');
 const customTextInput = document.getElementById('custom-text');
 const whatsappBtn = document.getElementById('whatsapp-btn');
 
-// 1. Selector de Tamaño (Corregido con multiplicadores precisos)
+// 1. Selector de Tamaño
 document.querySelectorAll('#size-selector .btn-option').forEach(btn => {
   btn.addEventListener('click', (e) => {
     document.querySelectorAll('#size-selector .btn-option').forEach(b => b.classList.remove('active'));
@@ -63,7 +63,7 @@ document.querySelectorAll('.color-btn').forEach(btn => {
     document.querySelectorAll('.color-btn').forEach(b => b.classList.remove('active'));
     e.currentTarget.classList.add('active');
     
-    // Soporte para colores sólidos o degradados combinados
+    // Asigna el gradiente o el color sólido según corresponda
     if (e.currentTarget.dataset.gradient) {
       cakeState.creamBackground = e.currentTarget.dataset.gradient;
     } else {
@@ -95,7 +95,7 @@ function renderCake() {
   const tier = document.createElement('div');
   tier.className = `tier ${cakeState.sizeClass}`;
   
-  // Aplica color sólido o fondo combinado (degradado)
+  // SOLUCIÓN: Usar .style.background en lugar de .style.backgroundColor para permitir degradados sin romper el diseño
   tier.style.background = cakeState.creamBackground;
 
   // EFECTO: Chocolate Chorreado (Drip)
@@ -143,7 +143,7 @@ function renderCake() {
   cakeLayersContainer.appendChild(tier);
 }
 
-// CÁLCULO DEL PRECIO TOTAL (Corregido con multiplicador de tamaño aplicado correctamente)
+// CÁLCULO DEL PRECIO TOTAL (Corregido con los multiplicadores proporcionales correctos)
 function calculatePrice() {
   let subtotal = cakeState.basePrice + cakeState.typeExtraPrice;
   let total = subtotal * cakeState.sizeMultiplier;
