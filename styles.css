@@ -50,7 +50,7 @@ h2 {
   font-size: 1.5rem;
 }
 
-/* ESTANTERÍA / ESCENARIO DE PREVISUALIZACIÓN */
+/* ESCENARIO DE PREVISUALIZACIÓN */
 .stage {
   height: 320px;
   background: radial-gradient(circle, #FFF0F5 0%, #FFE4E1 100%);
@@ -65,7 +65,7 @@ h2 {
 }
 
 .plate {
-  width: 240px;
+  width: 250px;
   height: 18px;
   background: #E0E0E0;
   border-radius: 50%;
@@ -80,10 +80,9 @@ h2 {
   align-items: center;
   z-index: 2;
   margin-bottom: -5px;
-  transition: transform 0.3s ease;
 }
 
-/* Tamaños del pastel */
+/* TAMAÑOS DE LA TORTA: Media < Tres Cuartos < Libra */
 .tier {
   border-radius: 12px 12px 6px 6px;
   transition: all 0.4s ease;
@@ -92,33 +91,112 @@ h2 {
   display: flex;
   justify-content: center;
   align-items: center;
+  overflow: visible;
 }
 
-/* Anchos según tamaño seleccionado */
-.cake-size-media { width: 140px; height: 60px; }
-.cake-size-libra { width: 180px; height: 75px; }
-.cake-size-tres-cuartos { width: 210px; height: 85px; }
+.cake-size-media { width: 130px; height: 60px; }
+.cake-size-tres-cuartos { width: 170px; height: 75px; }
+.cake-size-libra { width: 210px; height: 90px; }
 
-/* Decoraciones sobre el pastel */
-.toppings-layer {
+/* --- EFECTOS VISUALES EN TIEMPO REAL --- */
+
+/* 1. Chocolate Chorreado (Drip) */
+.drip-layer {
   position: absolute;
-  top: -22px;
+  top: 0;
+  left: 0;
   width: 100%;
+  height: 25px;
+  background: #3D2314;
+  border-radius: 12px 12px 0 0;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+  z-index: 4;
+}
+
+.drip-layer::after {
+  content: '';
+  position: absolute;
+  top: 20px;
+  left: 0;
+  width: 100%;
+  height: 15px;
+  background: radial-gradient(circle at 10px 0, #3D2314 10px, transparent 11px);
+  background-size: 20px 20px;
+}
+
+/* 2. Sprinkles / Chispas de colores */
+.sprinkles-layer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 12px;
+  pointer-events: none;
+  z-index: 5;
+  background-image: 
+    radial-gradient(circle, #FF477E 3px, transparent 4px),
+    radial-gradient(circle, #00CEC9 3px, transparent 4px),
+    radial-gradient(circle, #FFD166 3px, transparent 4px),
+    radial-gradient(circle, #06D6A0 3px, transparent 4px),
+    radial-gradient(circle, #118AB2 3px, transparent 4px);
+  background-size: 40px 30px, 35px 25px, 50px 35px, 30px 40px, 45px 28px;
+  background-position: 5px 8px, 15px 18px, 25px 5px, 35px 12px, 10px 25px;
+}
+
+/* 3. Chispas de Chocolate */
+.choco-chips-layer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 12px;
+  pointer-events: none;
+  z-index: 5;
+  background-image: 
+    radial-gradient(circle, #3D2314 3px, transparent 4px),
+    radial-gradient(circle, #5A351D 3px, transparent 4px);
+  background-size: 25px 20px, 35px 30px;
+  background-position: 8px 10px, 20px 5px;
+}
+
+/* 4. Masmelos en la parte superior */
+.marshmallows-layer {
+  position: absolute;
+  top: -18px;
+  width: 90%;
   display: flex;
   justify-content: space-around;
-  font-size: 1.2rem;
-  z-index: 5;
+  z-index: 6;
 }
 
+.marshmallow {
+  width: 16px;
+  height: 16px;
+  background: #FFF;
+  border-radius: 5px;
+  box-shadow: inset -2px -2px 0 #FFB6C1, 0 2px 4px rgba(0,0,0,0.1);
+  transform: rotate(12deg);
+}
+
+.marshmallow:nth-child(even) {
+  background: #FFF0F5;
+  box-shadow: inset -2px -2px 0 #B0E0E6;
+  transform: rotate(-10deg);
+}
+
+/* Texto personalizado */
 .cake-text-overlay {
   position: absolute;
-  color: #4A4A4A;
+  color: #333;
   font-family: 'Fredoka', cursive;
-  font-size: 0.85rem;
+  font-size: 0.9rem;
   text-align: center;
   width: 90%;
   font-weight: bold;
-  text-shadow: 0 1px 2px rgba(255,255,255,0.8);
+  z-index: 7;
+  text-shadow: 0 1px 3px rgba(255,255,255,0.9);
 }
 
 .price-box {
@@ -138,7 +216,7 @@ h2 {
   font-family: 'Fredoka', cursive;
 }
 
-/* FORMULARIO Y BOTONES */
+/* FORMULARIO Y CONTROLES */
 .form-group {
   margin-bottom: 20px;
 }
@@ -164,7 +242,7 @@ h2 {
   cursor: pointer;
   font-weight: 600;
   transition: 0.2s;
-  font-size: 0.9rem;
+  font-size: 0.85rem;
   text-align: center;
 }
 
@@ -187,7 +265,6 @@ h2 {
   border-color: #FF6B8B;
 }
 
-/* SELECTOR DE COLOR EN CÍRCULOS */
 .color-picker-grid {
   display: flex;
   gap: 10px;
