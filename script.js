@@ -90,7 +90,7 @@ function renderCake() {
   tier.className = `tier ${cakeState.sizeClass}`;
   tier.style.backgroundColor = cakeState.creamColor;
 
-  // EFECTO: Extra Chocolate Chorreado (Drip)
+  // EFECTO: Chocolate Chorreado (Drip)
   if (cakeState.toppings.includes('Chocolate chorreado')) {
     const drip = document.createElement('div');
     drip.className = 'drip-layer';
@@ -135,7 +135,7 @@ function renderCake() {
   cakeLayersContainer.appendChild(tier);
 }
 
-// CÁLCULO DEL PRECIO TOTAL
+// CÁLCULO DEL PRECIO TOTAL (Suma base + extras de bizcochos/cubierta + cada topping seleccionado)
 function calculatePrice() {
   let total = (cakeState.basePrice + cakeState.typeExtraPrice) * cakeState.sizeMultiplier;
   
