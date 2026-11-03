@@ -65,12 +65,12 @@ h2 {
 }
 
 .plate {
-  width: 250px;
-  height: 18px;
-  background: #E0E0E0;
+  width: 260px;
+  height: 20px;
+  background: linear-gradient(to bottom, #FFFFFF, #D6D6D6);
   border-radius: 50%;
-  border: 3px solid #D6D6D6;
-  box-shadow: 0 8px 15px rgba(0,0,0,0.1);
+  border: 2px solid #C4C4C4;
+  box-shadow: 0 10px 20px rgba(0,0,0,0.15);
   z-index: 1;
 }
 
@@ -79,35 +79,56 @@ h2 {
   flex-direction: column-reverse;
   align-items: center;
   z-index: 2;
-  margin-bottom: -5px;
+  margin-bottom: -6px;
 }
 
-/* TAMAÑOS DE LA TORTA */
+/* PASTEL 3D REALISTA */
 .tier {
-  border-radius: 12px 12px 6px 6px;
+  border-radius: 50% / 15px; /* Efecto elíptico 3D en la base y cima */
   transition: all 0.4s ease;
   position: relative;
-  box-shadow: inset 0 -8px 0 rgba(0,0,0,0.08), 0 4px 10px rgba(0,0,0,0.05);
+  /* Sombra interna para dar volumen cilíndrico y sombra de contacto abajo */
+  box-shadow: inset 0 12px 15px rgba(255,255,255,0.4), 
+              inset 0 -15px 20px rgba(0,0,0,0.2), 
+              0 8px 15px rgba(0,0,0,0.12);
   display: flex;
   justify-content: center;
   align-items: center;
   overflow: visible;
 }
 
-.cake-size-media { width: 130px; height: 60px; }
-.cake-size-tres-cuartos { width: 170px; height: 75px; }
-.cake-size-libra { width: 210px; height: 90px; }
-
-/* EFECTOS VISUALES EN TIEMPO REAL */
-.drip-layer {
+/* Tapa superior de la torta (crema superior elíptica) */
+.tier::before {
+  content: '';
   position: absolute;
-  top: 0;
+  top: -10px;
   left: 0;
   width: 100%;
-  height: 25px;
+  height: 22px;
+  background: inherit;
+  border-radius: 50%;
+  box-shadow: inset 0 -4px 8px rgba(0,0,0,0.15);
+  filter: brightness(1.05);
+  z-index: 3;
+}
+
+/* Tamaños de la torta */
+.cake-size-media { width: 140px; height: 75px; }
+.cake-size-tres-cuartos { width: 180px; height: 90px; }
+.cake-size-libra { width: 220px; height: 105px; }
+
+/* --- DECORACIONES REALISTAS --- */
+
+/* Chocolate Chorreado con relieve */
+.drip-layer {
+  position: absolute;
+  top: -5px;
+  left: -2px;
+  right: -2px;
+  height: 35px;
   background: #3D2314;
-  border-radius: 12px 12px 0 0;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+  border-radius: 50% / 10px;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.3);
   z-index: 4;
 }
 
@@ -117,18 +138,19 @@ h2 {
   top: 20px;
   left: 0;
   width: 100%;
-  height: 15px;
-  background: radial-gradient(circle at 10px 0, #3D2314 10px, transparent 11px);
-  background-size: 20px 20px;
+  height: 20px;
+  background: radial-gradient(circle at 12px 0, #3D2314 12px, transparent 13px);
+  background-size: 24px 20px;
 }
 
+/* Chispas de colores con brillo */
 .sprinkles-layer {
   position: absolute;
-  top: 0;
+  top: -5px;
   left: 0;
   width: 100%;
   height: 100%;
-  border-radius: 12px;
+  border-radius: 50%;
   pointer-events: none;
   z-index: 5;
   background-image: 
@@ -137,55 +159,58 @@ h2 {
     radial-gradient(circle, #FFD166 3px, transparent 4px),
     radial-gradient(circle, #06D6A0 3px, transparent 4px),
     radial-gradient(circle, #118AB2 3px, transparent 4px);
-  background-size: 40px 30px, 35px 25px, 50px 35px, 30px 40px, 45px 28px;
-  background-position: 5px 8px, 15px 18px, 25px 5px, 35px 12px, 10px 25px;
+  background-size: 35px 25px, 40px 30px, 45px 35px, 30px 35px, 50px 30px;
+  background-position: 8px 5px, 20px 15px, 12px 25px, 30px 8px, 15px 20px;
 }
 
+/* Chispas de chocolate */
 .choco-chips-layer {
   position: absolute;
-  top: 0;
+  top: -5px;
   left: 0;
   width: 100%;
   height: 100%;
-  border-radius: 12px;
+  border-radius: 50%;
   pointer-events: none;
   z-index: 5;
   background-image: 
-    radial-gradient(circle, #3D2314 3px, transparent 4px),
-    radial-gradient(circle, #5A351D 3px, transparent 4px);
-  background-size: 25px 20px, 35px 30px;
-  background-position: 8px 10px, 20px 5px;
+    radial-gradient(circle, #2C160B 3px, transparent 4px),
+    radial-gradient(circle, #4A2810 3px, transparent 4px);
+  background-size: 30px 25px, 40px 30px;
+  background-position: 10px 10px, 25px 8px;
 }
 
+/* Masmelos 3D esponjosos arriba */
 .marshmallows-layer {
   position: absolute;
-  top: -18px;
-  width: 90%;
+  top: -24px;
+  width: 85%;
   display: flex;
   justify-content: space-around;
   z-index: 6;
 }
 
 .marshmallow {
-  width: 16px;
-  height: 16px;
-  background: #FFF;
-  border-radius: 5px;
-  box-shadow: inset -2px -2px 0 #FFB6C1, 0 2px 4px rgba(0,0,0,0.1);
-  transform: rotate(12deg);
+  width: 18px;
+  height: 18px;
+  background: radial-gradient(circle at 6px 6px, #FFFFFF, #E0E0E0);
+  border-radius: 6px;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.15), inset -2px -2px 4px rgba(0,0,0,0.1);
+  transform: rotate(10deg);
 }
 
 .marshmallow:nth-child(even) {
-  background: #FFF0F5;
-  box-shadow: inset -2px -2px 0 #B0E0E6;
-  transform: rotate(-10deg);
+  background: radial-gradient(circle at 6px 6px, #FFFFFF, #FFD1DC);
+  transform: rotate(-12deg);
 }
 
+/* Texto personalizado */
 .cake-text-overlay {
   position: absolute;
-  color: #333;
+  top: 35%;
+  color: #2D2D2D;
   font-family: 'Fredoka', cursive;
-  font-size: 0.9rem;
+  font-size: 0.95rem;
   text-align: center;
   width: 90%;
   font-weight: bold;
