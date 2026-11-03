@@ -4,14 +4,14 @@ const PHONE_NUMBER = "573152395773";
 // ESTADO INICIAL DEL PASTEL
 const cakeState = {
   sizeName: "Media Libra",
-  sizeMultiplier: 0.5,
+  sizeMultiplier: 1.0,
   sizeClass: "cake-size-media",
   flavourName: "Vainilla Tradicional",
   basePrice: 35000,
   typeName: "Crema Fría / Chantilly",
   typeCategory: "Fría",
   typeExtraPrice: 0,
-  creamColor: "#FFF8DC",
+  creamBackground: "#FFF8DC", // Puede ser color sólido o gradiente
   toppings: [],
   customText: ""
 };
@@ -24,7 +24,7 @@ const typeSelect = document.getElementById('type-select');
 const customTextInput = document.getElementById('custom-text');
 const whatsappBtn = document.getElementById('whatsapp-btn');
 
-// 1. Selector de Tamaño (Corregido y sincronizado)
+// 1. Selector de Tamaño (Corregido con multiplicadores precisos)
 document.querySelectorAll('#size-selector .btn-option').forEach(btn => {
   btn.addEventListener('click', (e) => {
     document.querySelectorAll('#size-selector .btn-option').forEach(b => b.classList.remove('active'));
@@ -57,12 +57,18 @@ flavourSelect.addEventListener('change', (e) => {
   updateGame();
 });
 
-// 4. Selector del Color de la Crema
+// 4. Selector del Color o Combinación de la Crema
 document.querySelectorAll('.color-btn').forEach(btn => {
   btn.addEventListener('click', (e) => {
     document.querySelectorAll('.color-btn').forEach(b => b.classList.remove('active'));
-    e.target.classList.add('active');
-    cakeState.creamColor = e.target.dataset.color;
+    e.currentTarget.classList.add('active');
+    
+    // Soporte para colores sólidos o degradados combinados
+    if (e.currentTarget.dataset.gradient) {
+      cakeState.creamBackground = e.currentTarget.dataset.gradient;
+    } else {
+      cakeState.creamBackground = e.currentTarget.dataset.color;
+    }
     updateGame();
   });
 });
@@ -88,7 +94,9 @@ function renderCake() {
 
   const tier = document.createElement('div');
   tier.className = `tier ${cakeState.sizeClass}`;
-  tier.style.backgroundColor = cakeState.creamColor;
+  
+  // Aplica color sólido o fondo combinado (degradado)
+  tier.style.background = cakeState.creamBackground;
 
   // EFECTO: Chocolate Chorreado (Drip)
   if (cakeState.toppings.includes('Chocolate chorreado')) {
@@ -135,9 +143,10 @@ function renderCake() {
   cakeLayersContainer.appendChild(tier);
 }
 
-// CÁLCULO DEL PRECIO TOTAL
+// CÁLCULO DEL PRECIO TOTAL (Corregido con multiplicador de tamaño aplicado correctamente)
 function calculatePrice() {
-  let total = (cakeState.basePrice + cakeState.typeExtraPrice) * cakeState.sizeMultiplier;
+  let subtotal = cakeState.basePrice + cakeState.typeExtraPrice;
+  let total = subtotal * cakeState.sizeMultiplier;
   
   document.querySelectorAll('.topping-check:checked').forEach(c => {
     total += parseInt(c.dataset.price);
