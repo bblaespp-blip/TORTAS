@@ -11,7 +11,7 @@ const cakeState = {
   typeName: "Crema Fría / Chantilly",
   typeCategory: "Fría",
   typeExtraPrice: 0,
-  creamBackground: "#FFF8DC", // Soporta colores sólidos o degradados
+  creamColor: "#FFF8DC",
   toppings: [],
   customText: ""
 };
@@ -57,18 +57,13 @@ flavourSelect.addEventListener('change', (e) => {
   updateGame();
 });
 
-// 4. Selector del Color o Combinación de la Crema
+// 4. Selector del Color de la Crema
 document.querySelectorAll('.color-btn').forEach(btn => {
   btn.addEventListener('click', (e) => {
     document.querySelectorAll('.color-btn').forEach(b => b.classList.remove('active'));
     e.currentTarget.classList.add('active');
     
-    // Asigna el gradiente o el color sólido según corresponda
-    if (e.currentTarget.dataset.gradient) {
-      cakeState.creamBackground = e.currentTarget.dataset.gradient;
-    } else {
-      cakeState.creamBackground = e.currentTarget.dataset.color;
-    }
+    cakeState.creamColor = e.currentTarget.dataset.color;
     updateGame();
   });
 });
@@ -88,15 +83,13 @@ customTextInput.addEventListener('input', (e) => {
   updateGame();
 });
 
-// RENDERIZAR EL PASTEL TRIDIMENSIONAL Y REALISTA
+// RENDERIZAR EL PASTEL 2D LIMPIO
 function renderCake() {
   cakeLayersContainer.innerHTML = '';
 
   const tier = document.createElement('div');
   tier.className = `tier ${cakeState.sizeClass}`;
-  
-  // SOLUCIÓN: Usar .style.background en lugar de .style.backgroundColor para permitir degradados sin romper el diseño
-  tier.style.background = cakeState.creamBackground;
+  tier.style.backgroundColor = cakeState.creamColor;
 
   // EFECTO: Chocolate Chorreado (Drip)
   if (cakeState.toppings.includes('Chocolate chorreado')) {
@@ -143,7 +136,7 @@ function renderCake() {
   cakeLayersContainer.appendChild(tier);
 }
 
-// CÁLCULO DEL PRECIO TOTAL (Corregido con los multiplicadores proporcionales correctos)
+// CÁLCULO DEL PRECIO TOTAL ACORDE AL TAMAÑO
 function calculatePrice() {
   let subtotal = cakeState.basePrice + cakeState.typeExtraPrice;
   let total = subtotal * cakeState.sizeMultiplier;
