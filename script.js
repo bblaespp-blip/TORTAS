@@ -1,5 +1,5 @@
-// CONFIGURACIÓN: Ingresa tu número telefónico con código de país (Ej: Colombia +57)
-const PHONE_NUMBER = "573000000000"; 
+// NÚMERO DE WHATSAPP CONFIGURADO
+const PHONE_NUMBER = "573152395773"; 
 
 // ESTADO INICIAL DEL PASTEL
 const cakeState = {
@@ -82,7 +82,7 @@ customTextInput.addEventListener('input', (e) => {
   updateGame();
 });
 
-// RENDERIZAR EL PASTEL Y SUS DECORACIONES EN TIEMPO REAL
+// RENDERIZAR EL PASTEL TRIDIMENSIONAL Y REALISTA
 function renderCake() {
   cakeLayersContainer.innerHTML = '';
 
@@ -135,7 +135,7 @@ function renderCake() {
   cakeLayersContainer.appendChild(tier);
 }
 
-// CÁLCULO DEL PRECIO TOTAL (Suma base + extras de bizcochos/cubierta + cada topping seleccionado)
+// CÁLCULO DEL PRECIO TOTAL
 function calculatePrice() {
   let total = (cakeState.basePrice + cakeState.typeExtraPrice) * cakeState.sizeMultiplier;
   
