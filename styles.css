@@ -110,7 +110,7 @@ h2 {
   z-index: 3;
 }
 
-/* Tamaños de la torta */
+/* Tamaños proporcionales de la torta */
 .cake-size-media { width: 140px; height: 75px; }
 .cake-size-tres-cuartos { width: 180px; height: 90px; }
 .cake-size-libra { width: 220px; height: 105px; }
