@@ -82,7 +82,7 @@ h2 {
   margin-bottom: -5px;
 }
 
-/* TAMAÑOS DE LA TORTA: Media < Tres Cuartos < Libra */
+/* TAMAÑOS DE LA TORTA */
 .tier {
   border-radius: 12px 12px 6px 6px;
   transition: all 0.4s ease;
@@ -98,9 +98,7 @@ h2 {
 .cake-size-tres-cuartos { width: 170px; height: 75px; }
 .cake-size-libra { width: 210px; height: 90px; }
 
-/* --- EFECTOS VISUALES EN TIEMPO REAL --- */
-
-/* 1. Chocolate Chorreado (Drip) */
+/* EFECTOS VISUALES EN TIEMPO REAL */
 .drip-layer {
   position: absolute;
   top: 0;
@@ -124,7 +122,6 @@ h2 {
   background-size: 20px 20px;
 }
 
-/* 2. Sprinkles / Chispas de colores */
 .sprinkles-layer {
   position: absolute;
   top: 0;
@@ -144,7 +141,6 @@ h2 {
   background-position: 5px 8px, 15px 18px, 25px 5px, 35px 12px, 10px 25px;
 }
 
-/* 3. Chispas de Chocolate */
 .choco-chips-layer {
   position: absolute;
   top: 0;
@@ -161,7 +157,6 @@ h2 {
   background-position: 8px 10px, 20px 5px;
 }
 
-/* 4. Masmelos en la parte superior */
 .marshmallows-layer {
   position: absolute;
   top: -18px;
@@ -186,7 +181,6 @@ h2 {
   transform: rotate(-10deg);
 }
 
-/* Texto personalizado */
 .cake-text-overlay {
   position: absolute;
   color: #333;
