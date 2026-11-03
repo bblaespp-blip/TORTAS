@@ -1,0 +1,252 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: 'Quicksand', sans-serif;
+}
+
+body {
+  background-color: #FFF5F7;
+  color: #4A4A4A;
+  padding: 20px;
+}
+
+.header {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.header h1 {
+  font-family: 'Fredoka', cursive;
+  color: #FF6B8B;
+  font-size: 2.5rem;
+}
+
+.main-container {
+  max-width: 1100px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 25px;
+}
+
+@media (min-width: 768px) {
+  .main-container {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.card {
+  background: #FFFFFF;
+  border-radius: 20px;
+  padding: 25px;
+  box-shadow: 0 10px 25px rgba(255, 107, 139, 0.1);
+}
+
+h2 {
+  font-family: 'Fredoka', cursive;
+  color: #FF6B8B;
+  margin-bottom: 20px;
+  font-size: 1.5rem;
+}
+
+/* ESTANTERÍA / ESCENARIO DE PREVISUALIZACIÓN */
+.stage {
+  height: 320px;
+  background: radial-gradient(circle, #FFF0F5 0%, #FFE4E1 100%);
+  border-radius: 15px;
+  display: flex;
+  flex-direction: column-reverse;
+  align-items: center;
+  justify-content: flex-start;
+  padding-bottom: 40px;
+  position: relative;
+  overflow: hidden;
+}
+
+.plate {
+  width: 240px;
+  height: 18px;
+  background: #E0E0E0;
+  border-radius: 50%;
+  border: 3px solid #D6D6D6;
+  box-shadow: 0 8px 15px rgba(0,0,0,0.1);
+  z-index: 1;
+}
+
+.cake-container {
+  display: flex;
+  flex-direction: column-reverse;
+  align-items: center;
+  z-index: 2;
+  margin-bottom: -5px;
+  transition: transform 0.3s ease;
+}
+
+/* Tamaños del pastel */
+.tier {
+  border-radius: 12px 12px 6px 6px;
+  transition: all 0.4s ease;
+  position: relative;
+  box-shadow: inset 0 -8px 0 rgba(0,0,0,0.08), 0 4px 10px rgba(0,0,0,0.05);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Anchos según tamaño seleccionado */
+.cake-size-media { width: 140px; height: 60px; }
+.cake-size-libra { width: 180px; height: 75px; }
+.cake-size-tres-cuartos { width: 210px; height: 85px; }
+
+/* Decoraciones sobre el pastel */
+.toppings-layer {
+  position: absolute;
+  top: -22px;
+  width: 100%;
+  display: flex;
+  justify-content: space-around;
+  font-size: 1.2rem;
+  z-index: 5;
+}
+
+.cake-text-overlay {
+  position: absolute;
+  color: #4A4A4A;
+  font-family: 'Fredoka', cursive;
+  font-size: 0.85rem;
+  text-align: center;
+  width: 90%;
+  font-weight: bold;
+  text-shadow: 0 1px 2px rgba(255,255,255,0.8);
+}
+
+.price-box {
+  margin-top: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #FFF0F3;
+  padding: 15px 20px;
+  border-radius: 12px;
+  font-size: 1.2rem;
+}
+
+.price-box strong {
+  color: #FF477E;
+  font-size: 1.6rem;
+  font-family: 'Fredoka', cursive;
+}
+
+/* FORMULARIO Y BOTONES */
+.form-group {
+  margin-bottom: 20px;
+}
+
+.form-group label {
+  display: block;
+  font-weight: 700;
+  margin-bottom: 8px;
+  color: #6C5CE7;
+}
+
+.btn-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+}
+
+.btn-option {
+  padding: 10px;
+  border: 2px solid #E2E8F0;
+  background: white;
+  border-radius: 10px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: 0.2s;
+  font-size: 0.9rem;
+  text-align: center;
+}
+
+.btn-option.active {
+  border-color: #FF6B8B;
+  background: #FF6B8B;
+  color: white;
+}
+
+.input-control {
+  width: 100%;
+  padding: 12px;
+  border: 2px solid #E2E8F0;
+  border-radius: 10px;
+  font-size: 1rem;
+  outline: none;
+}
+
+.input-control:focus {
+  border-color: #FF6B8B;
+}
+
+/* SELECTOR DE COLOR EN CÍRCULOS */
+.color-picker-grid {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.color-btn {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: 3px solid white;
+  box-shadow: 0 0 0 2px #E2E8F0;
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+
+.color-btn.active {
+  transform: scale(1.15);
+  box-shadow: 0 0 0 3px #FF6B8B;
+}
+
+.checkbox-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 8px;
+}
+
+@media (min-width: 500px) {
+  .checkbox-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.check-card {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px;
+  background: #F8FAF9;
+  border: 1px solid #E2E8F0;
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: 0.9rem;
+}
+
+.btn-whatsapp {
+  width: 100%;
+  padding: 16px;
+  background: #25D366;
+  color: white;
+  border: none;
+  border-radius: 12px;
+  font-size: 1.1rem;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: 0 5px 15px rgba(37, 211, 102, 0.3);
+  transition: background 0.2s;
+}
+
+.btn-whatsapp:hover {
+  background: #1EBE5D;
+}
