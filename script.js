@@ -4,10 +4,10 @@ const PHONE_NUMBER = "573000000000";
 // ESTADO INICIAL DEL PASTEL
 const cakeState = {
   sizeName: "Media Libra",
-  sizeMultiplier: 0.75,
+  sizeMultiplier: 0.5,
   sizeClass: "cake-size-media",
   flavourName: "Vainilla Tradicional",
-  basePrice: 25000,
+  basePrice: 35000,
   typeName: "Crema Fría / Chantilly",
   typeCategory: "Fría",
   typeExtraPrice: 0,
@@ -24,7 +24,7 @@ const typeSelect = document.getElementById('type-select');
 const customTextInput = document.getElementById('custom-text');
 const whatsappBtn = document.getElementById('whatsapp-btn');
 
-// 1. Selector de Tamaño
+// 1. Selector de Tamaño (Media Libra < Tres Cuartos < 1 Libra)
 document.querySelectorAll('#size-selector .btn-option').forEach(btn => {
   btn.addEventListener('click', (e) => {
     document.querySelectorAll('#size-selector .btn-option').forEach(b => b.classList.remove('active'));
@@ -40,7 +40,7 @@ document.querySelectorAll('#size-selector .btn-option').forEach(btn => {
   });
 });
 
-// 2. Selector de Tipo de Torta (Fría o Tradicional/Caliente)
+// 2. Selector de Tipo de Torta
 typeSelect.addEventListener('change', (e) => {
   const selectedOption = e.target.options[e.target.selectedIndex];
   cakeState.typeName = selectedOption.text.split(' (+$')[0];
@@ -67,7 +67,7 @@ document.querySelectorAll('.color-btn').forEach(btn => {
   });
 });
 
-// 5. Toppings y Extras
+// 5. Toppings y Extras (Marcar/Desmarcar)
 document.querySelectorAll('.topping-check').forEach(check => {
   check.addEventListener('change', () => {
     cakeState.toppings = Array.from(document.querySelectorAll('.topping-check:checked'))
@@ -82,7 +82,7 @@ customTextInput.addEventListener('input', (e) => {
   updateGame();
 });
 
-// RENDERIZAR EL MINIJUEGO (Dibuja la torta con el color de crema elegido)
+// RENDERIZAR EL PASTELES Y SUS DECORACIONES EN TIEMPO REAL
 function renderCake() {
   cakeLayersContainer.innerHTML = '';
 
@@ -90,19 +90,38 @@ function renderCake() {
   tier.className = `tier ${cakeState.sizeClass}`;
   tier.style.backgroundColor = cakeState.creamColor;
 
-  // Decoraciones / Toppings visuales
-  if (cakeState.toppings.length > 0) {
-    const toppingLayer = document.createElement('div');
-    toppingLayer.className = 'toppings-layer';
-    
-    let iconsHTML = '';
-    if (cakeState.toppings.includes('Chispas de colores')) iconsHTML += '✨';
-    if (cakeState.toppings.includes('Chispas de chocolate')) iconsHTML += '🍫';
-    if (cakeState.toppings.includes('Masmelos')) iconsHTML += '🍡';
-    if (cakeState.toppings.includes('Chocolate chorreado')) iconsHTML += '🍩';
-    
-    toppingLayer.innerHTML = iconsHTML;
-    tier.appendChild(toppingLayer);
+  // EFECTO 1: Extra Chocolate Chorreado (Drip)
+  if (cakeState.toppings.includes('Chocolate chorreado')) {
+    const drip = document.createElement('div');
+    drip.className = 'drip-layer';
+    tier.appendChild(drip);
+  }
+
+  // EFECTO 2: Chispas de Colores
+  if (cakeState.toppings.includes('Chispas de colores')) {
+    const sprinkles = document.createElement('div');
+    sprinkles.className = 'sprinkles-layer';
+    tier.appendChild(sprinkles);
+  }
+
+  // EFECTO 3: Chispas de Chocolate
+  if (cakeState.toppings.includes('Chispas de chocolate')) {
+    const chocoChips = document.createElement('div');
+    chocoChips.className = 'choco-chips-layer';
+    tier.appendChild(chocoChips);
+  }
+
+  // EFECTO 4: Masmelos
+  if (cakeState.toppings.includes('Masmelos')) {
+    const marshContainer = document.createElement('div');
+    marshContainer.className = 'marshmallows-layer';
+    marshContainer.innerHTML = `
+      <div class="marshmallow"></div>
+      <div class="marshmallow"></div>
+      <div class="marshmallow"></div>
+      <div class="marshmallow"></div>
+    `;
+    tier.appendChild(marshContainer);
   }
 
   // Texto personalizado en el pastel
@@ -118,10 +137,8 @@ function renderCake() {
 
 // CÁLCULO DEL PRECIO TOTAL
 function calculatePrice() {
-  // Base por tamaño + extra de la cobertura elegida
   let total = (cakeState.basePrice + cakeState.typeExtraPrice) * cakeState.sizeMultiplier;
   
-  // Sumar costos extras de los toppings seleccionados
   document.querySelectorAll('.topping-check:checked').forEach(c => {
     total += parseInt(c.dataset.price);
   });
