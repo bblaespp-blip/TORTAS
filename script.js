@@ -24,7 +24,7 @@ const typeSelect = document.getElementById('type-select');
 const customTextInput = document.getElementById('custom-text');
 const whatsappBtn = document.getElementById('whatsapp-btn');
 
-// 1. Selector de Tamaño (Media Libra < Tres Cuartos < 1 Libra)
+// 1. Selector de Tamaño
 document.querySelectorAll('#size-selector .btn-option').forEach(btn => {
   btn.addEventListener('click', (e) => {
     document.querySelectorAll('#size-selector .btn-option').forEach(b => b.classList.remove('active'));
@@ -67,7 +67,7 @@ document.querySelectorAll('.color-btn').forEach(btn => {
   });
 });
 
-// 5. Toppings y Extras (Marcar/Desmarcar)
+// 5. Toppings y Extras
 document.querySelectorAll('.topping-check').forEach(check => {
   check.addEventListener('change', () => {
     cakeState.toppings = Array.from(document.querySelectorAll('.topping-check:checked'))
@@ -82,7 +82,7 @@ customTextInput.addEventListener('input', (e) => {
   updateGame();
 });
 
-// RENDERIZAR EL PASTELES Y SUS DECORACIONES EN TIEMPO REAL
+// RENDERIZAR EL PASTEL Y SUS DECORACIONES EN TIEMPO REAL
 function renderCake() {
   cakeLayersContainer.innerHTML = '';
 
@@ -90,28 +90,28 @@ function renderCake() {
   tier.className = `tier ${cakeState.sizeClass}`;
   tier.style.backgroundColor = cakeState.creamColor;
 
-  // EFECTO 1: Extra Chocolate Chorreado (Drip)
+  // EFECTO: Extra Chocolate Chorreado (Drip)
   if (cakeState.toppings.includes('Chocolate chorreado')) {
     const drip = document.createElement('div');
     drip.className = 'drip-layer';
     tier.appendChild(drip);
   }
 
-  // EFECTO 2: Chispas de Colores
+  // EFECTO: Chispas de Colores
   if (cakeState.toppings.includes('Chispas de colores')) {
     const sprinkles = document.createElement('div');
     sprinkles.className = 'sprinkles-layer';
     tier.appendChild(sprinkles);
   }
 
-  // EFECTO 3: Chispas de Chocolate
+  // EFECTO: Chispas de Chocolate
   if (cakeState.toppings.includes('Chispas de chocolate')) {
     const chocoChips = document.createElement('div');
     chocoChips.className = 'choco-chips-layer';
     tier.appendChild(chocoChips);
   }
 
-  // EFECTO 4: Masmelos
+  // EFECTO: Masmelos
   if (cakeState.toppings.includes('Masmelos')) {
     const marshContainer = document.createElement('div');
     marshContainer.className = 'marshmallows-layer';
@@ -166,7 +166,7 @@ whatsappBtn.addEventListener('click', () => {
     `🍫 *Toppings/Extras:* ${toppingsList}%0A` +
     `✍️ *Texto en pastel:* ${textoMsg}%0A` +
     `💰 *Total Estimado:* $${total.toLocaleString('es-CO')}%0A%0A` +
-    `¿Me confirmas disponibilidad para agenda?`;
+    `¿Me confirmas disponibilidad para agenda en Santa Marta?`;
 
   window.open(`https://wa.me/${PHONE_NUMBER}?text=${message}`, '_blank');
 });
