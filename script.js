@@ -24,7 +24,7 @@ const typeSelect = document.getElementById('type-select');
 const customTextInput = document.getElementById('custom-text');
 const whatsappBtn = document.getElementById('whatsapp-btn');
 
-// 1. Selector de Tamaño
+// 1. Selector de Tamaño (Corregido y sincronizado)
 document.querySelectorAll('#size-selector .btn-option').forEach(btn => {
   btn.addEventListener('click', (e) => {
     document.querySelectorAll('#size-selector .btn-option').forEach(b => b.classList.remove('active'));
