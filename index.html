@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Tu Repostería - Santa Marta</title>
   <link rel="stylesheet" href="styles.css">
-  <!-- Fuentes e Íconos -->
+  <!-- Fuentes -->
   <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600;700&family=Quicksand:wght@500;700&display=swap" rel="stylesheet">
 </head>
 <body>
@@ -18,7 +18,7 @@
 
   <main class="main-container">
     
-    <!-- ÁREA DEL MINIJUEGO / PREVISUALIZADOR -->
+    <!-- ÁREA DE VISUALIZACIÓN 2D -->
     <section class="preview-section">
       <div class="card">
         <h2>Vista Previa de tu Pastel</h2>
@@ -26,7 +26,7 @@
           <!-- Stand / Plato -->
           <div class="plate"></div>
 
-          <!-- Capa dinámica de la torta realista -->
+          <!-- Capa dinámica de la torta 2D -->
           <div id="cake-layers" class="cake-container"></div>
         </div>
 
@@ -45,13 +45,13 @@
         
         <form id="cake-form" onsubmit="event.preventDefault();">
           
-          <!-- Paso 1: Tamaño (Medidas) -->
+          <!-- Paso 1: Tamaño (Precios base directos) -->
           <div class="form-group">
             <label>1. Tamaño del Pastel:</label>
             <div class="btn-grid" id="size-selector">
               <button type="button" class="btn-option active" data-size="media" data-multiplier="1">Media Libra</button>
               <button type="button" class="btn-option" data-size="tres-cuartos" data-multiplier="1.35">Tres Cuartos</button>
-              <button type="button" class="btn-option" data-size="libra" data-multiplier="1.75">1 Libra</button>
+              <button type="button" class="btn-option" data-size="libra" data-multiplier="1.8">1 Libra</button>
             </div>
           </div>
 
@@ -83,11 +83,10 @@
             </select>
           </div>
 
-          <!-- Paso 4: Color de la Crema y Combinados -->
+          <!-- Paso 4: Paleta de Colores 2D Sólidos -->
           <div class="form-group">
-            <label>4. Color de la Crema (Sólidos y Combinados):</label>
+            <label>4. Color de la Crema:</label>
             <div class="color-picker-grid">
-              <!-- Colores Sólidos -->
               <button type="button" class="color-btn active" data-color="#FFF8DC" title="Blanco Crema" style="background:#FFF8DC;"></button>
               <button type="button" class="color-btn" data-color="#FFE4E1" title="Rosa Pastel" style="background:#FFE4E1;"></button>
               <button type="button" class="color-btn" data-color="#FF69B4" title="Rosado Fucsia" style="background:#FF69B4;"></button>
@@ -97,12 +96,6 @@
               <button type="button" class="color-btn" data-color="#B0E0E6" title="Azul Celeste" style="background:#B0E0E6;"></button>
               <button type="button" class="color-btn" data-color="#E6E6FA" title="Lavanda" style="background:#E6E6FA;"></button>
               <button type="button" class="color-btn" data-color="#5C3A21" title="Chocolate" style="background:#5C3A21;"></button>
-
-              <!-- Colores Combinados / Degradados -->
-              <button type="button" class="color-btn" data-gradient="linear-gradient(135deg, #FFB6C1, #FFF8DC)" title="Combinado: Rosa & Vainilla" style="background: linear-gradient(135deg, #FFB6C1, #FFF8DC);"></button>
-              <button type="button" class="color-btn" data-gradient="linear-gradient(135deg, #B0E0E6, #FFF8DC)" title="Combinado: Celeste & Vainilla" style="background: linear-gradient(135deg, #B0E0E6, #FFF8DC);"></button>
-              <button type="button" class="color-btn" data-gradient="linear-gradient(135deg, #E6E6FA, #FFB6C1)" title="Combinado: Lila & Rosa" style="background: linear-gradient(135deg, #E6E6FA, #FFB6C1);"></button>
-              <button type="button" class="color-btn" data-gradient="linear-gradient(135deg, #C1E1C1, #FFFACD)" title="Combinado: Menta & Amarillo" style="background: linear-gradient(135deg, #C1E1C1, #FFFACD);"></button>
             </div>
           </div>
 
