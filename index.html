@@ -1,164 +1,142 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>BLIP - Red Social de Arte</title>
-<style>
-body { margin:0; font-family:sans-serif; background:#0f0f0f; color:#fff; }
-header { background:#1a1a1a; padding:10px; display:flex; justify-content:space-between; align-items:center; }
-button { padding:5px 10px; margin:0 5px; cursor:pointer; }
-#auth, #chat { max-width:600px; margin:20px auto; display:none; }
-#messages { border:1px solid #333; padding:10px; height:300px; overflow-y:auto; margin-bottom:10px; }
-input, textarea { width:100%; padding:5px; margin-bottom:10px; background:#222; color:#fff; border:none; }
-input::placeholder, textarea::placeholder { color:#888; }
-img { max-width:100%; margin-top:5px; border-radius:5px; }
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Repostería - Arma tu Pastel</title>
+  <link rel="stylesheet" href="styles.css">
+  <!-- Fuentes e Íconos -->
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600;700&family=Quicksand:wght@500;700&display=swap" rel="stylesheet">
 </head>
 <body>
 
-<header>
-  <h2>BLIP - Red Social de Arte</h2>
-  <div>
-    <button id="btnShowAuth">Iniciar sesión / Registrarse</button>
-    <button id="btnShowChat" style="display:none;">Chat Global</button>
-    <button id="btnLogout" style="display:none;">Cerrar sesión</button>
-  </div>
-</header>
+  <!-- Encabezado -->
+  <header class="header">
+    <h1>🎂 Repostería Mágica</h1>
+    <p>¡Diseña tu pastel ideal y haz tu pedido en vivo!</p>
+  </header>
 
-<div id="auth">
-  <h3>Autenticación</h3>
-  <input type="email" id="email" placeholder="Correo electrónico">
-  <input type="password" id="password" placeholder="Contraseña">
-  <button id="btnLogin">Iniciar sesión</button>
-  <button id="btnRegister">Registrarse</button>
-  <p id="authMsg"></p>
-</div>
+  <main class="main-container">
+    
+    <!-- ÁREA DEL MINIJUEGO / PREVISUALIZADOR -->
+    <section class="preview-section">
+      <div class="card">
+        <h2>Vista Previa de tu Pastel</h2>
+        <div class="stage" id="stage">
+          <!-- Stand / Plato -->
+          <div class="plate"></div>
 
-<div id="chat">
-  <h3>Chat Global</h3>
-  <div id="messages"></div>
-  <textarea id="messageInput" placeholder="Escribe tu mensaje..."></textarea>
-  <input type="file" id="fileInput" accept="image/*">
-  <button id="btnSend">Enviar</button>
-</div>
+          <!-- Capas dinámicas dibujadas con JS -->
+          <div id="cake-layers" class="cake-container"></div>
+        </div>
 
-<!-- Firebase CDN -->
-<script src="https://www.gstatic.com/firebasejs/10.5.0/firebase-app.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.5.0/firebase-database.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.5.0/firebase-auth.js"></script>
+        <!-- Resumen de Costo -->
+        <div class="price-box">
+          <span>Total Estimado:</span>
+          <strong id="total-price">$0</strong>
+        </div>
+      </div>
+    </section>
 
-<script>
-// Config Firebase
-const firebaseConfig = {
-  apiKey: "AIzaSyA5yh8J7Mgij3iZCOEZ2N8r1yhDkLcXsTg",
-  authDomain: "almacenamiento-redsocial.firebaseapp.com",
-  databaseURL: "https://almacenamiento-redsocial-default-rtdb.firebaseio.com",
-  projectId: "almacenamiento-redsocial",
-  storageBucket: "almacenamiento-redsocial.firebasestorage.app",
-  messagingSenderId: "562861595597",
-  appId: "1:562861595597:web:f9e5764ea977b72fa9c284",
-  measurementId: "G-KZXC1T5EFD"
-};
+    <!-- PANEL DE PERSONALIZACIÓN -->
+    <section class="controls-section">
+      <div class="card">
+        <h2>Personaliza tu Pedido</h2>
+        
+        <form id="cake-form" onsubmit="event.preventDefault();">
+          
+          <!-- Paso 1: Tamaño (Medidas) -->
+          <div class="form-group">
+            <label>1. Tamaño del Pastel:</label>
+            <div class="btn-grid" id="size-selector">
+              <button type="button" class="btn-option active" data-size="media" data-multiplier="0.75">Media Libra</button>
+              <button type="button" class="btn-option" data-size="libra" data-multiplier="1">1 Libra</button>
+              <button type="button" class="btn-option" data-size="tres-cuartos" data-multiplier="1.5">Tres Cuartos</button>
+            </div>
+          </div>
 
-// Inicializar Firebase
-firebase.initializeApp(firebaseConfig);
-const db = firebase.database();
-const auth = firebase.auth();
+          <!-- Paso 2: Tipo de Torta y Cobertura -->
+          <div class="form-group">
+            <label>2. Tipo de Torta y Cobertura:</label>
+            <select id="type-select" class="input-control">
+              <optgroup label="❄️ Tortas Frías">
+                <option value="fria-crema" data-price-extra="0" data-category="Fría">Crema Fría / Chantilly</option>
+                <option value="fria-ganache" data-price-extra="3000" data-category="Fría">Ganache de Chocolate (+$3,000)</option>
+              </optgroup>
+              <optgroup label="🔥 Tortas Tradicionales / Calientes">
+                <option value="caliente-mantequilla" data-price-extra="0" data-category="Tradicional">Crema de Mantequilla (Buttercream)</option>
+                <option value="caliente-arequipe" data-price-extra="2000" data-category="Tradicional">Arequipe (+$2,000)</option>
+                <option value="caliente-queso" data-price-extra="3000" data-category="Tradicional">Crema de Queso (+$3,000)</option>
+                <option value="caliente-merengue" data-price-extra="1000" data-category="Tradicional">Merengue (+$1,000)</option>
+              </optgroup>
+            </select>
+          </div>
 
-// Cloudinary
-const cloudName = "dz9s37bk0";
-const unsignedPreset = "blip_unsigned";
+          <!-- Paso 3: Sabor del Bizcocho -->
+          <div class="form-group">
+            <label>3. Sabor del Bizcocho:</label>
+            <select id="flavour-select" class="input-control">
+              <option value="vainilla" data-price="25000">Vainilla Tradicional ($25,000)</option>
+              <option value="chocolate" data-price="28000">Chocolate ($28,000)</option>
+              <option value="naranja" data-price="26000">Naranja ($26,000)</option>
+              <option value="redvelvet" data-price="32000">Red Velvet ($32,000)</option>
+            </select>
+          </div>
 
-// Elementos
-const authDiv = document.getElementById("auth");
-const chatDiv = document.getElementById("chat");
-const btnShowAuth = document.getElementById("btnShowAuth");
-const btnShowChat = document.getElementById("btnShowChat");
-const btnLogout = document.getElementById("btnLogout");
-const emailInput = document.getElementById("email");
-const passwordInput = document.getElementById("password");
-const authMsg = document.getElementById("authMsg");
-const messagesDiv = document.getElementById("messages");
-const messageInput = document.getElementById("messageInput");
-const fileInput = document.getElementById("fileInput");
+          <!-- Paso 4: Color de la Crema -->
+          <div class="form-group">
+            <label>4. Color de la Crema / Decoración:</label>
+            <div class="color-picker-grid">
+              <button type="button" class="color-btn active" data-color="#FFF8DC" title="Blanco Cream" style="background:#FFF8DC;"></button>
+              <button type="button" class="color-btn" data-color="#5C3A21" title="Chocolate" style="background:#5C3A21;"></button>
+              <button type="button" class="color-btn" data-color="#FFB6C1" title="Rosado Fresa" style="background:#FFB6C1;"></button>
+              <button type="button" class="color-btn" data-color="#B0E0E6" title="Azul Celeste" style="background:#B0E0E6;"></button>
+              <button type="button" class="color-btn" data-color="#FFFACD" title="Amarillo Pastel" style="background:#FFFACD;"></button>
+              <button type="button" class="color-btn" data-color="#C1E1C1" title="Verde Menta" style="background:#C1E1C1;"></button>
+              <button type="button" class="color-btn" data-color="#E6E6FA" title="Lavanda" style="background:#E6E6FA;"></button>
+            </div>
+          </div>
 
-// Mostrar/ocultar secciones
-btnShowAuth.onclick = () => { authDiv.style.display='block'; chatDiv.style.display='none'; };
-btnShowChat.onclick = () => { chatDiv.style.display='block'; authDiv.style.display='none'; };
+          <!-- Paso 5: Toppings y Extras -->
+          <div class="form-group">
+            <label>5. Toppings y Extras (Opcionales):</label>
+            <div class="checkbox-grid">
+              <label class="check-card">
+                <input type="checkbox" value="Chispas de colores" data-price="3000" class="topping-check">
+                <span>✨ Chispas de colores (+$3,000)</span>
+              </label>
+              <label class="check-card">
+                <input type="checkbox" value="Chispas de chocolate" data-price="3000" class="topping-check">
+                <span>🍫 Chispas de chocolate (+$3,000)</span>
+              </label>
+              <label class="check-card">
+                <input type="checkbox" value="Masmelos" data-price="4000" class="topping-check">
+                <span>🍡 Masmelos (+$4,000)</span>
+              </label>
+              <label class="check-card">
+                <input type="checkbox" value="Chocolate chorreado" data-price="5000" class="topping-check">
+                <span>🍫 Extra Chocolate Chorreado (+$5,000)</span>
+              </label>
+            </div>
+          </div>
 
-// Registro
-document.getElementById("btnRegister").onclick = () => {
-  const email = emailInput.value;
-  const password = passwordInput.value;
-  auth.createUserWithEmailAndPassword(email, password)
-    .then(() => { authMsg.textContent = "Registrado correctamente!"; })
-    .catch(e => { authMsg.textContent = e.message; });
-};
+          <!-- Paso 6: Mensaje -->
+          <div class="form-group">
+            <label for="custom-text">6. Mensaje en el Pastel (Opcional):</label>
+            <input type="text" id="custom-text" class="input-control" placeholder="Ej: ¡Feliz Cumpleaños!" maxlength="30">
+          </div>
 
-// Login
-document.getElementById("btnLogin").onclick = () => {
-  const email = emailInput.value;
-  const password = passwordInput.value;
-  auth.signInWithEmailAndPassword(email, password)
-    .then(() => { authMsg.textContent = ""; })
-    .catch(e => { authMsg.textContent = e.message; });
-};
+          <!-- Botón de Pedido -->
+          <button type="button" id="whatsapp-btn" class="btn-whatsapp">
+            📲 Enviar Pedido por WhatsApp
+          </button>
 
-// Detectar estado de sesión
-auth.onAuthStateChanged(user => {
-  if(user){
-    authDiv.style.display = 'none';
-    chatDiv.style.display = 'block';
-    btnShowChat.style.display = 'inline';
-    btnLogout.style.display = 'inline';
-  } else {
-    authDiv.style.display = 'block';
-    chatDiv.style.display = 'none';
-    btnShowChat.style.display = 'none';
-    btnLogout.style.display = 'none';
-  }
-});
+        </form>
+      </div>
+    </section>
 
-// Logout
-btnLogout.onclick = () => { auth.signOut(); };
+  </main>
 
-// Subir imagen a Cloudinary
-async function uploadImage(file) {
-  const formData = new FormData();
-  formData.append('file', file);
-  formData.append('upload_preset', unsignedPreset);
-  const res = await fetch(`https://api.cloudinary.com/v1_1/${cloudName}/upload`, { method: 'POST', body: formData });
-  const data = await res.json();
-  return data.secure_url;
-}
-
-// Enviar mensaje
-document.getElementById("btnSend").onclick = async () => {
-  let imageUrl = null;
-  if(fileInput.files.length > 0) imageUrl = await uploadImage(fileInput.files[0]);
-  const msg = messageInput.value.trim();
-  if(msg === "" && !imageUrl) return;
-  db.ref("messages").push({ user: auth.currentUser.email, text: msg, image: imageUrl || null, timestamp: Date.now() });
-  messageInput.value = "";
-  fileInput.value = "";
-};
-
-// Escuchar mensajes
-db.ref("messages").on("child_added", snapshot => {
-  const data = snapshot.val();
-  const div = document.createElement("div");
-  const time = new Date(data.timestamp).toLocaleTimeString();
-  div.innerHTML = `[${time}] <b>${data.user}</b>: ${data.text || ""}`;
-  if(data.image) {
-    const img = document.createElement("img");
-    img.src = data.image;
-    div.appendChild(img);
-  }
-  messagesDiv.appendChild(div);
-  messagesDiv.scrollTop = messagesDiv.scrollHeight;
-});
-</script>
-
+  <script src="script.js"></script>
 </body>
 </html>
